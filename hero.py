@@ -4,7 +4,7 @@ import random
 class Hero:
   # We want our hero to have a default "starting_health",
   # so we can set that in the function header.
-  def __init__(self, name, starting_health=100):
+  def __init__(self, name, power_level=100, starting_health=100):
     '''Instance properties:
       name: String
       starting_health: Integer
@@ -13,6 +13,8 @@ class Hero:
 
     # we know the name of our hero, so we assign it here
     self.name = name
+    # as part of the stretch challenge, heros are given a power level
+    self.power = power_level
     # similarly, our starting health is passed in, just like name
     self.starting_health = starting_health
     # when a hero is created, their current health is
@@ -25,24 +27,29 @@ class Hero:
     # Phases to implement:
     #1) randomly choose winner,
     # Hint: Look into random library, more specifically the choice method
-    hero_list = [self.name, opponent.name]
-    winner = random.choice(hero_list)
+    pwr_sum = self.power + opponent.power
+    self_stats = (self.power / pwr_sum) * 100
+    opp_stats = (opponent.power / pwr_sum) * 100
+
+    winner = ""
     loser = ""
-    if winner == self.name:
+    if self_stats > opp_stats:
         loser = opponent.name
+        winner = self.name
     else:
         loser = self.name
+        winner = opponent.name
     print(f"{winner} defeats {loser}!")
 
 
 if __name__ == "__main__":
   # If you run this file from the terminal
   # this block is executed.
-  my_hero = Hero("Grace Hopper", 200)
+  my_hero = Hero("Grace Hopper", starting_health=200)
   print(my_hero.name)
   print(my_hero.current_health)
 
-  hero1 = Hero("Wonder Woman")
-  hero2 = Hero("Dumbledore")
+  hero1 = Hero("Wonder Woman", 300)
+  hero2 = Hero("Dumbledore", 250)
 
   hero1.fight(hero2)
