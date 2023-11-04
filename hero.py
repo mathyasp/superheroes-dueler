@@ -9,6 +9,8 @@ class Hero:
       starting_health: Integer
       current_health: Integer
     '''
+    self.deaths = 0
+    self.kills = 0
     self.abilities = list()
     self.armors = list()
     self.name = name
@@ -20,18 +22,22 @@ class Hero:
   def fight(self, opponent):
     ''' Current Hero will take turns fighting the opponent hero passed in.
     '''
-    if (len(self.abilities) == 0) or (len(opponent.abilities) == 0):
+    if (len(self.abilities) == 0) and (len(opponent.abilities) == 0):
       print("Draw")
     else:
       while self.is_alive() and opponent.is_alive():
-        self.take_damage(opponent.attack())
-        if not self.is_alive():
-          print(f"{opponent.name} won!")
-          return
         opponent.take_damage(self.attack())
         if not opponent.is_alive():
+          opponent.add_death(1)
+          self.add_kill(1)
           print(f"{self.name} won!")
-          return
+          return opponent 
+        self.take_damage(opponent.attack())
+        if not self.is_alive():
+          self.add_death(1)
+          opponent.add_kill(1)
+          print(f"{opponent.name} won!")
+          return self
 
 
   def add_ability(self, ability):
@@ -90,6 +96,16 @@ class Hero:
     self.abilities.append(weapon)
 
 
+  def add_kill(self, num_kills):
+    ''' Update self.kills by num_kills amount'''
+    self.kills += num_kills
+
+
+  def add_death(self, num_deaths):
+    ''' Update deaths with num_deaths'''
+    self.deaths += num_deaths
+
+
 if __name__ == "__main__":
   # If you run this file from the terminal
   # this block is executed.
@@ -97,4 +113,3 @@ if __name__ == "__main__":
   weapon = Weapon("Lasso of Truth", 90)
   hero.add_weapon(weapon)
   print(hero.attack())
-  
