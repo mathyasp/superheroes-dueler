@@ -1,8 +1,4 @@
 import random
-from hero import Hero
-from ability import Ability
-from armor import Armor
-from weapon import Weapon
 
 class Team:
   def __init__(self, name):
