@@ -8,6 +8,11 @@ class Team:
     self.heroes = list()
 
 
+  def add_hero(self, hero):
+    '''Add Hero object to self.heroes.'''
+    self.heroes.append(hero)
+    
+
   def remove_hero(self, name):
     '''Remove hero from heroes list.
     If Hero isn't found return 0.
@@ -26,11 +31,6 @@ class Team:
     '''Prints out all heroes to the console.'''
     for hero in self.heroes:
       print(hero.name)
-
-
-  def add_hero(self, hero):
-    '''Add Hero object to self.heroes.'''
-    self.heroes.append(hero)
 
 
   def stats(self):
